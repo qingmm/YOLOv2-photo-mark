@@ -35,8 +35,8 @@ def draw_circle(event,x,y,flags,param):
 	return
 
 number = 0
-Image_Path = path+"/images"
-f_wrect = open(path+'/images.txt','a')
+Image_Path = path+"/images" #图片文件夹路径
+f_wrect = open(path+'/images.txt','a') #用来记录标记的图片
 for file in os.listdir(Image_Path):
     if 'fth_near' not in file:
         continue
@@ -64,7 +64,7 @@ for file in os.listdir(Image_Path):
             y = y*dh # center of box-y
             w = (ox-ix)*dw # width of box
             h = (oy-iy)*dh # height of box
-            image_rect = '0 %s'% x +' '+ '%s'% y+ ' ' + '%s'% w + ' ' + '%s'% h + '\n'
+            image_rect = '0 %s'% x +' '+ '%s'% y+ ' ' + '%s'% w + ' ' + '%s'% h + '\n' #此处0代表该类目标的序号
             label.write(image_rect)
             drawed = False
         #当downFlag为True时，表示当前图片标记结束

@@ -8,8 +8,8 @@ path = sys.path[0] + os.sep
 
 global ix ,iy, ox, oy, drawing, downFlag, drawed
 
-drawing = False # 当鼠标按下时变为 True
-drawed = False # 当绘制一个图形时变为True
+drawing = False  # 当鼠标按下时变为 True
+drawed = False  # 当绘制一个图形时变为True
 ix, iy = -1, -1
 ox, oy = -1, -1
 # 创建回调函数
@@ -35,8 +35,9 @@ def draw_circle(event, x, y, flags, param):
     return
 
 number = 0
-image_path = path + "images" + os.sep # 图片文件夹路径
-f_wrect = open(path + 'images.txt', 'a') # 用来记录标记的图片
+image_path = path + "images" + os.sep  # 图片文件夹路径
+f_wrect = open(path + 'images.txt', 'a')  # 用来记录标记的图
+obj_id = 0  # 此处obj_id代表该类目标的序号
 for fn in os.listdir(image_path):
     number += 1
     window_name = os.path.splitext(fn)[0]
@@ -50,7 +51,7 @@ for fn in os.listdir(image_path):
     cv2.setMouseCallback(window_name, draw_circle)
     while(True):
         global downFlag, drawing, drawed
-        downFlag = False #当点击鼠标右键时变为True，退出绘制，关闭当前图片
+        downFlag = False  # 当点击鼠标右键时变为True，退出绘制，关闭当前图片
         cv2.imshow(window_name, image)
         cv2.waitKey(255)
         if drawed == True:
@@ -58,14 +59,14 @@ for fn in os.listdir(image_path):
             dh = 1.0 / height
             x = (ix + ox) / 2.0
             y = (iy + oy) / 2.0    
-            x = x * dw # center of box-x
-            y = y * dh # center of box-y
-            w = (ox - ix) * dw # width of box
-            h = (oy - iy) * dh # height of box
-            image_rect = '0 %s' % x + ' ' + '%s' % y + ' ' + '%s' % w + ' ' + '%s' % h + '\n' #此处0代表该类目标的序号
+            x = x * dw  # center of box-x
+            y = y * dh  # center of box-y
+            w = (ox - ix) * dw  # width of box
+            h = (oy - iy) * dh  # height of box
+            image_rect = '%s %s' % (obj_id, x) + ' ' + '%s' % y + ' ' + '%s' % w + ' ' + '%s' % h + '\n'  # 此处obj_id代表该类目标的序号
             label.write(image_rect)
             drawed = False
-        #当downFlag为True时，表示当前图片标记结束
+        # 当downFlag为True时，表示当前图片标记结束
         if downFlag == True:
             break
     cv2.destroyWindow(window_name)
